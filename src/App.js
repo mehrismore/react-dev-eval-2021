@@ -9,15 +9,12 @@ import slapImage4 from "./assets/hand-4.png";
 import logo from "./assets/slapsticker-logo.png";
 
 const useStyles = createUseStyles((theme) => ({
-  // "@import":
-  //   "url('https://fonts.googleapis.com/css2?family=New+Amsterdam&display=swap')",
-
   "@import":
     "url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap')",
   "@global body": {
     background: theme.palette.violet,
     color: theme.palette.text,
-    fontFamily: "'Comfortaa', 'New Amsterdam', sans-serif",
+    fontFamily: "'Comfortaa', sans-serif",
   },
 
   App: {
@@ -173,11 +170,15 @@ const useStyles = createUseStyles((theme) => ({
     background: theme.palette.green,
     padding: "20px 100px",
     textDecoration: "none",
-    // color: "black !important", // Ensure the color is applied
     display: "inline-block", // Makes the link behave more like a button
     textAlign: "center",
     cursor: "pointer", // Makes it act like a button with a pointer cursor
     borderRadius: "5px", // Border radius to make it look like a button
+
+    "@media (max-width: 768px)": {
+      fontSize: "5rem",
+      padding: "10px 50px",
+    },
   },
   HeaderContainer: {
     display: "flex",
