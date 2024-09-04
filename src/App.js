@@ -6,21 +6,22 @@ import slapImage1 from "./assets/hand-1.png";
 import slapImage2 from "./assets/hand-2.png";
 import slapImage3 from "./assets/hand-3.png";
 import slapImage4 from "./assets/hand-4.png";
-import slapImage5 from "./assets/slap.png";
 import logo from "./assets/slapsticker-logo.png";
 
 const useStyles = createUseStyles((theme) => ({
+  "@import":
+    "url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap')",
   "@global body": {
     background: theme.palette.violet,
     color: theme.palette.text,
-    fontFamily: "sans-serif",
+    fontFamily: "'Comfortaa', sans-serif",
   },
 
   App: {
-    padding: "20px",
+    padding: "10px",
     background: theme.palette.violet,
-    maxWidth: "800px",
-    minHeight: "600px",
+    maxWidth: "1200px",
+    minHeight: "900px",
     margin: "auto",
     "& a": {
       color: theme.palette.text,
@@ -28,7 +29,8 @@ const useStyles = createUseStyles((theme) => ({
   },
   Header: {
     textAlign: "center",
-    fontSize: "2rem",
+    fontSize: "4rem",
+    fontWeight: "bold",
     marginTop: "4rem",
     color: theme.palette.hotPink,
   },
@@ -50,14 +52,19 @@ const useStyles = createUseStyles((theme) => ({
     width: "100%",
   },
   Stickers: {
-    "& img": {
-      height: "6rem",
+    marginTop: "4rem",
+    "& h2": {
+      fontSize: "4rem",
+      marginTop: "6px",
     },
-    marginTop: "6px",
+    "& img": {
+      height: "8rem",
+    },
   },
   Section: {
     marginTop: "4rem",
     "& h2": {
+      fontSize: "4rem",
       marginTop: "6px",
     },
   },
@@ -76,67 +83,73 @@ const useStyles = createUseStyles((theme) => ({
   },
   Picture: {
     background: theme.palette.hotPink,
-    padding: "4px",
+    padding: "8px",
     position: "relative",
     "& img": {
       width: "150px",
-      height: "10rem", // Sets a fixed height for the image
+      height: "8rem", // Sets a fixed height for the image
       objectFit: "cover", // Ensures the image maintains its aspect ratio
       marginTop: "16px",
     },
     "& h3": {
-      padding: "8px",
+      padding: "2px",
+      fontSize: "2rem",
       textAlign: "center",
       color: "white",
     },
   },
-  inputStyle: {
+  InputStyle: {
     padding: "8px",
-    border: "2px solid #ccc",
-    borderRadius: "4px",
+    border: "none",
+    borderBottom: "2px solid #fff",
+    fontSize: "32px",
     marginTop: "2px",
+    background: "none",
     marginBottom: "10px",
-    fontSize: "16px",
-    color: theme.palette.gray,
+    color: "rgba(255, 255, 255, 0.5)", // White with 50% opacity
     width: "50%",
+    outline: "none",
+    "&:focus": {
+      background: theme.palette.purple, // Hot pink background when focused
+      color: "white",
+    },
   },
-  link: {
+  Link: {
     textDecoration: "none",
     "&:hover": {
       textDecoration: "underline", // Adding underline on hover for better UX
       color: theme.palette.hotPink,
     },
   },
-  list: {
+  List: {
     display: "flex",
     justifyContent: "flex-end",
     listStyleType: "none",
     padding: 0,
     margin: 0,
   },
-  listItem: {
+  ListItem: {
     marginRight: "20px",
   },
-  videoStyle: {
+  VideoStyle: {
     display: "flex",
     alignItems: "center",
   },
-  downloadBtn: {
+  DownloadBtn: {
     position: "relative",
     display: "flex",
     justifyContent: "flex-end",
     cursor: "pointer",
-    "&:hover $downloadText": {
+    "&:hover $DownloadText": {
       visibility: "visible",
       opacity: 1,
     },
   },
-  downloadIcon: {
+  DownloadIcon: {
     width: "24px",
     height: "24px",
-    // marginRight: "6px",
   },
-  downloadText: {
+  DownloadText: {
     visibility: "hidden",
     width: "80px",
     backgroundColor: "rgba(0, 0, 0, 0.7)",
@@ -146,21 +159,40 @@ const useStyles = createUseStyles((theme) => ({
     padding: "7px 0",
     position: "absolute",
     bottom: "125%", // Position the tooltip above the icon
-    left: "50%",
+    left: "90%",
     transform: "translateX(-50%)",
     zIndex: 1,
     opacity: 0,
     transition: "opacity 0.3s",
   },
+  PlayButton: {
+    fontSize: "10rem",
+    background: theme.palette.green,
+    padding: "20px 100px",
+    textDecoration: "none",
+    display: "inline-block", // Makes the link behave more like a button
+    textAlign: "center",
+    cursor: "pointer", // Makes it act like a button with a pointer cursor
+    borderRadius: "5px", // Border radius to make it look like a button
+
+    "@media (max-width: 768px)": {
+      fontSize: "5rem",
+      padding: "10px 50px",
+    },
+  },
+  HeaderContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+
+    // Media query for mobile screens
+    "@media (max-width: 768px)": {
+      alignItems: "left", // Switch to column on mobile
+    },
+  },
 }));
 
-const stickers = [
-  slapImage5,
-  slapImage1,
-  slapImage2,
-  slapImage3,
-  slapImage4,
-].map((url) => {
+const stickers = [slapImage1, slapImage2, slapImage3, slapImage4].map((url) => {
   const img = document.createElement("img");
   img.src = url;
   return { img, url };
@@ -213,14 +245,19 @@ function App(props) {
       <div className={classes.Menu}>
         <img className={classes.Logo} src={logo} alt="" />
         <nav>
-          <ul className={classes.list}>
-            <li className={classes.listItem}>
-              <Link to="/" className={classes.link}>
+          <ul className={classes.List}>
+            <li className={classes.ListItem}>
+              <Link to="/" className={classes.Link}>
                 Home
               </Link>
             </li>
+            <li className={classes.ListItem}>
+              <Link to="/play" className={classes.Link}>
+                Play!
+              </Link>
+            </li>
             <li>
-              <Link to="/readme" className={classes.link}>
+              <Link to="/readme" className={classes.Link}>
                 ReadMe
               </Link>
             </li>
@@ -231,12 +268,21 @@ function App(props) {
       {/* <h1 className={classes.Header}>SlapSticker</h1> */}
 
       <Switch>
-        {/* Main app route */}
+        {/* Main app route(Landing Page) */}
         <Route path="/" exact>
-          <p className={classes.Header}>
-            Have you ever said something so dumb, you just wanted to slap
-            yourself? Well now you can!
-          </p>
+          <div className={classes.HeaderContainer}>
+            <p className={classes.Header}>
+              Have you ever said something so dumb, you just wanted to slap
+              yourself? Well now you can!
+            </p>
+            <Link to="/play" className={classes.PlayButton}>
+              Play!
+            </Link>
+          </div>
+          {/* <button className={classes.PlayButton}>Play!</button> */}
+        </Route>
+        {/* Play page */}
+        <Route path="/play" exact>
           <main className={classes.Main}>
             <section className={classes.Section}>
               <h2>Step 1: Give it a name</h2>
@@ -247,7 +293,7 @@ function App(props) {
                   placeholder={
                     showPlaceholder && title === "" ? "slaaaaap!" : ""
                   }
-                  className={classes.inputStyle}
+                  className={classes.InputStyle}
                   onChange={(e) => setTitle(e.target.value)}
                   onFocus={() => {
                     if (title === "slaaaaap!") setTitle(""); // Clear the placeholder value on focus if it's still there
@@ -277,7 +323,7 @@ function App(props) {
             </section>
             <section className={classes.Section}>
               <h2>Step 3: Slap yourself!</h2>
-              <div className={classes.videoStyle}>
+              <div className={classes.VideoStyle}>
                 <video ref={handleVideoRef} />
                 <canvas
                   ref={handleCanvasRef}
@@ -295,10 +341,10 @@ function App(props) {
                     <img src={picture.dataUri} alt="" />
                     <br />
                     <div
-                      className={classes.downloadBtn}
+                      className={classes.DownloadBtn}
                       onClick={() => downloadPicture(picture, index)}
                     >
-                      <div className={classes.downloadIcon}>
+                      <div className={classes.DownloadIcon}>
                         <svg
                           width="24"
                           height="24"
@@ -315,7 +361,7 @@ function App(props) {
                           />
                         </svg>
                       </div>
-                      <span className={classes.downloadText}>Download</span>
+                      <span className={classes.DownloadText}>Download</span>
                     </div>
                     <h3>{picture.title}</h3>
                   </div>
