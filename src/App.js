@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 import { createUseStyles } from "react-jss";
-import { useWebcamCapture } from "./useWebcamCapture";
-import slapImage1 from "./hand-1.png";
-import slapImage2 from "./hand-2.png";
-import slapImage3 from "./hand-3.png";
-import slapImage4 from "./hand-4.png";
-
 import { Link, Switch, Route, Redirect } from "react-router-dom";
+import { useWebcamCapture } from "./useWebcamCapture";
+import slapImage1 from "./assets/hand-1.png";
+import slapImage2 from "./assets/hand-2.png";
+import slapImage3 from "./assets/hand-3.png";
+import slapImage4 from "./assets/hand-4.png";
 
 const useStyles = createUseStyles((theme) => ({
   "@global body": {
@@ -54,7 +53,7 @@ const useStyles = createUseStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",
-    // gap: "10px",
+    gap: "10px",
     "& img": {
       height: "10rem",
     },
@@ -109,6 +108,35 @@ const useStyles = createUseStyles((theme) => ({
   Section: {
     marginTop: "6rem",
   },
+  downloadBtn: {
+    position: "relative",
+    display: "inline-block",
+    cursor: "pointer",
+    "&:hover $downloadText": {
+      visibility: "visible",
+      opacity: 1,
+    },
+  },
+  downloadIcon: {
+    width: "24px",
+    height: "24px",
+  },
+  downloadText: {
+    visibility: "hidden",
+    width: "80px",
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
+    color: "white",
+    textAlign: "center",
+    borderRadius: "6px",
+    padding: "7px 0",
+    position: "absolute",
+    bottom: "125%", // Position the tooltip above the icon
+    left: "50%",
+    transform: "translateX(-50%)",
+    zIndex: 1,
+    opacity: 0,
+    transition: "opacity 0.3s",
+  },
 }));
 
 const stickers = [slapImage1, slapImage2, slapImage3, slapImage4].map((url) => {
@@ -150,6 +178,14 @@ function App(props) {
       setPictures((prevPictures) => [...prevPictures, picture]);
     }
   }, [picture]); // This effect runs whenever the `picture` changes (after a capture)
+
+  // Function to trigger the picture download
+  const downloadPicture = (picture, index) => {
+    const link = document.createElement("a");
+    link.href = picture.dataUri;
+    link.download = `slap-pic-${index + 1}.png`;
+    link.click(); // Programmatically trigger the download
+  };
 
   return (
     <div className={classes.App}>
@@ -225,6 +261,30 @@ function App(props) {
                 {pictures.map((picture, index) => (
                   <div key={index} className={classes.Picture}>
                     <img src={picture.dataUri} alt="" />
+                    <br />
+                    <div
+                      className={classes.downloadBtn}
+                      onClick={() => downloadPicture(picture, index)}
+                    >
+                      <div className={classes.downloadIcon}>
+                        <svg
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M3 16.5V18.75C3 19.3467 3.23705 19.919 3.65901 20.341C4.08097 20.7629 4.65326 21 5.25 21H18.75C19.3467 21 19.919 20.7629 20.341 20.341C20.7629 19.919 21 19.3467 21 18.75V16.5M16.5 12L12 16.5M12 16.5L7.5 12M12 16.5V3"
+                            stroke="black"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          />
+                        </svg>
+                      </div>
+                      <span className={classes.downloadText}>Download</span>
+                    </div>
                     <h3>{picture.title}</h3>
                   </div>
                 ))}
