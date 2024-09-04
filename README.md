@@ -1,3 +1,9 @@
+# Hiii, It's Mehrnoosh!
+
+Hope you'll enjoy my design on SlapSticker ;)
+
+****
+
 # Devtest Readme
 
 Hello candidate, Welcome to our little dev test. The goal of this exercise, is to asses your general skill level, and give us something to talk about at our next appointment.
