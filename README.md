@@ -1,6 +1,6 @@
-# Hiii, It's Mehrnoosh!
+# Hiya, It's Mehrnoosh!😃
 
-Hope you'll enjoy my design on SlapSticker ;)
+I hope you'll enjoy my design on SlapSticker!💜😉
 
 ****
 
