@@ -6,6 +6,8 @@ import slapImage1 from "./assets/hand-1.png";
 import slapImage2 from "./assets/hand-2.png";
 import slapImage3 from "./assets/hand-3.png";
 import slapImage4 from "./assets/hand-4.png";
+import slapImage5 from "./assets/slap.png";
+import logo from "./assets/slapsticker-logo.png";
 
 const useStyles = createUseStyles((theme) => ({
   "@global body": {
@@ -25,13 +27,10 @@ const useStyles = createUseStyles((theme) => ({
     },
   },
   Header: {
-    "& h1": {
-      fontFamily: "sans-serif",
-      cursor: "pointer",
-      fontSize: "4rem",
-      text: theme.palette.hotPink,
-      textAlign: "center",
-    },
+    textAlign: "center",
+    fontSize: "2rem",
+    marginTop: "4rem",
+    color: theme.palette.hotPink,
   },
   Main: {
     background: theme.palette.violet,
@@ -44,10 +43,27 @@ const useStyles = createUseStyles((theme) => ({
       display: "none",
     },
   },
+  Menu: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+  },
   Stickers: {
     "& img": {
-      height: "4rem",
+      height: "6rem",
     },
+    marginTop: "6px",
+  },
+  Section: {
+    marginTop: "4rem",
+    "& h2": {
+      marginTop: "6px",
+    },
+  },
+  Logo: {
+    width: "100px",
+    height: "100px",
   },
   Gallery: {
     display: "flex",
@@ -105,12 +121,10 @@ const useStyles = createUseStyles((theme) => ({
     display: "flex",
     alignItems: "center",
   },
-  Section: {
-    marginTop: "6rem",
-  },
   downloadBtn: {
     position: "relative",
-    display: "inline-block",
+    display: "flex",
+    justifyContent: "flex-end",
     cursor: "pointer",
     "&:hover $downloadText": {
       visibility: "visible",
@@ -120,6 +134,7 @@ const useStyles = createUseStyles((theme) => ({
   downloadIcon: {
     width: "24px",
     height: "24px",
+    // marginRight: "6px",
   },
   downloadText: {
     visibility: "hidden",
@@ -139,7 +154,13 @@ const useStyles = createUseStyles((theme) => ({
   },
 }));
 
-const stickers = [slapImage1, slapImage2, slapImage3, slapImage4].map((url) => {
+const stickers = [
+  slapImage5,
+  slapImage1,
+  slapImage2,
+  slapImage3,
+  slapImage4,
+].map((url) => {
   const img = document.createElement("img");
   img.src = url;
   return { img, url };
@@ -153,7 +174,7 @@ function App(props) {
   const [sticker, setSticker] = useState();
 
   // title for the picture that will be captured
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState("slaaaaap!");
 
   const [showPlaceholder, setShowPlaceholder] = useState(true);
 
@@ -189,44 +210,55 @@ function App(props) {
 
   return (
     <div className={classes.App}>
-      <nav>
-        <ul className={classes.list}>
-          <li className={classes.listItem}>
-            <Link to="/" className={classes.link}>
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link to="/readme" className={classes.link}>
-              ReadMe
-            </Link>
-          </li>
-        </ul>
-      </nav>
-      <header>
-        <h1 className={classes.header}>SlapSticker</h1>
-      </header>
+      <div className={classes.Menu}>
+        <img className={classes.Logo} src={logo} alt="" />
+        <nav>
+          <ul className={classes.list}>
+            <li className={classes.listItem}>
+              <Link to="/" className={classes.link}>
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link to="/readme" className={classes.link}>
+                ReadMe
+              </Link>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      {/* <h1 className={classes.Header}>SlapSticker</h1> */}
+
       <Switch>
         {/* Main app route */}
         <Route path="/" exact>
-          <header className={classes.Header}>
-            <p>
-              Have you ever said something so dumb, you just wanted to slap
-              yourself? Well now you can!
-            </p>
-          </header>
-          <main>
-            <section>
+          <p className={classes.Header}>
+            Have you ever said something so dumb, you just wanted to slap
+            yourself? Well now you can!
+          </p>
+          <main className={classes.Main}>
+            <section className={classes.Section}>
               <h2>Step 1: Give it a name</h2>
               <div className={classes.Gallery}>
                 <input
                   type="text"
                   value={title}
-                  placeholder={showPlaceholder ? "slaaaaap!" : ""}
+                  placeholder={
+                    showPlaceholder && title === "" ? "slaaaaap!" : ""
+                  }
                   className={classes.inputStyle}
                   onChange={(e) => setTitle(e.target.value)}
-                  onFocus={() => setShowPlaceholder(false)}
-                  onBlur={() => setShowPlaceholder(title === "")}
+                  onFocus={() => {
+                    if (title === "slaaaaap!") setTitle(""); // Clear the placeholder value on focus if it's still there
+                    setShowPlaceholder(false);
+                  }}
+                  onBlur={() => {
+                    if (title === "") {
+                      setTitle("slaaaaap!"); // Restore the placeholder value if input is empty
+                      setShowPlaceholder(true);
+                    }
+                  }}
                 />
               </div>
             </section>
@@ -243,7 +275,7 @@ function App(props) {
                 ))}
               </div>
             </section>
-            <section className={classes.Main}>
+            <section className={classes.Section}>
               <h2>Step 3: Slap yourself!</h2>
               <div className={classes.videoStyle}>
                 <video ref={handleVideoRef} />
@@ -276,7 +308,7 @@ function App(props) {
                         >
                           <path
                             d="M3 16.5V18.75C3 19.3467 3.23705 19.919 3.65901 20.341C4.08097 20.7629 4.65326 21 5.25 21H18.75C19.3467 21 19.919 20.7629 20.341 20.341C20.7629 19.919 21 19.3467 21 18.75V16.5M16.5 12L12 16.5M12 16.5L7.5 12M12 16.5V3"
-                            stroke="black"
+                            stroke="white"
                             stroke-width="1.5"
                             stroke-linecap="round"
                             stroke-linejoin="round"
