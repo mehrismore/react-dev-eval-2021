@@ -1,7 +1,6 @@
 # Hiya, It's Mehrnoosh!😃
 
-I hope you'll enjoy my design on SlapSticker!💜😉
-
+I hope you'll enjoy my design on SlapSticker! 💜 And go "slap" yourself 😄😉
 ****
 
 # Devtest Readme
