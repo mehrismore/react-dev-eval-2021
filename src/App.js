@@ -54,7 +54,7 @@ const useStyles = createUseStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",
-    // gap: "10px",
+    gap: "10px",
     "& img": {
       height: "10rem",
     },
