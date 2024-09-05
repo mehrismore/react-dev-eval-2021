@@ -33,6 +33,10 @@ const useStyles = createUseStyles((theme) => ({
     fontWeight: "bold",
     marginTop: "4rem",
     color: theme.palette.hotPink,
+    "@media (max-width: 768px)": {
+      fontSize: "2rem",
+      fontWeight: "medium",
+    },
   },
   Main: {
     background: theme.palette.violet,
@@ -60,12 +64,24 @@ const useStyles = createUseStyles((theme) => ({
     "& img": {
       height: "8rem",
     },
+    "@media (max-width: 768px)": {
+      "& h2": {
+        fontSize: "2rem",
+        marginTop: "3px",
+      },
+    },
   },
   Section: {
     marginTop: "4rem",
     "& h2": {
       fontSize: "4rem",
       marginTop: "6px",
+    },
+    "@media (max-width: 768px)": {
+      "& h2": {
+        fontSize: "2rem",
+        marginTop: "3px",
+      },
     },
   },
   Logo: {
@@ -176,8 +192,8 @@ const useStyles = createUseStyles((theme) => ({
     borderRadius: "5px", // Border radius to make it look like a button
 
     "@media (max-width: 768px)": {
-      fontSize: "5rem",
-      padding: "10px 50px",
+      fontSize: "2rem",
+      padding: "5px 10px",
     },
   },
   HeaderContainer: {
